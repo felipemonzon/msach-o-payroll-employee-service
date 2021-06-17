@@ -1,0 +1,1552 @@
+{
+	"info": {
+		"_postman_id": "0c62325e-0925-439d-a2d7-1a61b20d37df",
+		"name": "Rinku-cinema",
+		"description": "Pruebas de las APIS de rinku cinmea",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CSMG-customerManagement",
+			"item": [
+				{
+					"name": "employee-data-retrieve",
+					"item": [
+						{
+							"name": "pagination success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test('Employee schema is valid', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).to.be.a(\"number\");",
+											"    pm.expect(jsonData.totalPages).to.be.a(\"number\");",
+											"    pm.expect(jsonData.lastPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.firstPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.employees).to.be.an(\"array\");",
+											"    pm.expect(jsonData.employees).not.be.empty;",
+											"",
+											"    const employee = jsonData.employees[0]",
+											"    pm.expect(employee.idEmployee).to.be.a(\"number\");",
+											"    pm.expect(employee.enrolled).to.be.a(\"string\");",
+											"    pm.expect(employee.firstname).to.be.a(\"string\");",
+											"    pm.expect(employee.lastanme).to.be.a(\"string\");",
+											"    pm.expect(employee.idRol).to.be.a(\"number\");",
+											"    pm.expect(employee.idType).to.be.a(\"number\");",
+											"    pm.expect(employee.idStatus).to.be.a(\"number\");",
+											"});",
+											"",
+											"pm.test('Employee response not empty dataº', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).to.eql(0);;",
+											"    pm.expect(jsonData.totalPages).not.eql(0);",
+											"    pm.expect(jsonData.lastPage).to.be.false;",
+											"    pm.expect(jsonData.firstPage).to.be.true;",
+											"    pm.expect(jsonData.employees).not.be.empty;",
+											"",
+											"    const employee = jsonData.employees[0]",
+											"    pm.expect(employee.idEmployee).not.eql(0);",
+											"    pm.expect(employee.enrolled).not.be.empty;",
+											"    pm.expect(employee.firstname).not.be.empty;",
+											"    pm.expect(employee.lastanme).not.be.empty;",
+											"    pm.expect(employee.idRol).not.eql(0);",
+											"    pm.expect(employee.idType).not.eql(0);",
+											"    pm.expect(employee.idStatus).not.eql(0);",
+											"});",
+											"",
+											"tests[\"Body has idEmployee\"] = responseBody.has(\"idEmployee\");",
+											"tests[\"Body has enrolled\"] = responseBody.has(\"enrolled\");",
+											"tests[\"Body has firstname\"] = responseBody.has(\"firstname\");",
+											"tests[\"Body has lastanme\"] = responseBody.has(\"lastanme\");",
+											"tests[\"Body has idType\"] = responseBody.has(\"idType\");",
+											"tests[\"Body has idRol\"] = responseBody.has(\"idRol\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-pagination-domain}}1",
+									"host": [
+										"{{host-employee-management}}{{employee-data-pagination-domain}}1"
+									]
+								},
+								"description": "Consulta la pagina 1 de empleados con exito"
+							},
+							"response": []
+						},
+						{
+							"name": "no data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test('Employee schema is valid', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).to.be.a(\"number\");",
+											"    pm.expect(jsonData.totalPages).to.be.a(\"number\");",
+											"    pm.expect(jsonData.lastPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.firstPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.employees).to.be.an(\"array\");",
+											"    pm.expect(jsonData.employees).to.be.empty;",
+											"});",
+											"",
+											"",
+											"pm.test('Employee response not empty dataº', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).not.eql(0);;",
+											"    pm.expect(jsonData.totalPages).not.eql(0);",
+											"    pm.expect(jsonData.lastPage).to.be.true;",
+											"    pm.expect(jsonData.firstPage).to.be.false;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-pagination-domain}}100",
+									"host": [
+										"{{host-employee-management}}{{employee-data-pagination-domain}}100"
+									]
+								},
+								"description": "no obtiene datos en la consulta"
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test('Employee schema is valid', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\");",
+											"",
+											"    const employee = jsonData[0];",
+											"    pm.expect(employee.idEmployee).to.be.a(\"number\");",
+											"    pm.expect(employee.enrolled).to.be.a(\"string\");",
+											"    pm.expect(employee.firstname).to.be.a(\"string\");",
+											"    pm.expect(employee.lastanme).to.be.a(\"string\");",
+											"    pm.expect(employee.idRol).to.be.a(\"number\");",
+											"    pm.expect(employee.idType).to.be.a(\"number\");",
+											"    pm.expect(employee.idStatus).to.be.a(\"number\");",
+											"});",
+											"",
+											"tests[\"Body has idEmployee\"] = responseBody.has(\"idEmployee\");",
+											"tests[\"Body has enrolled\"] = responseBody.has(\"enrolled\");",
+											"tests[\"Body has firstname\"] = responseBody.has(\"firstname\");",
+											"tests[\"Body has lastanme\"] = responseBody.has(\"lastanme\");",
+											"tests[\"Body has idType\"] = responseBody.has(\"idType\");",
+											"tests[\"Body has idRol\"] = responseBody.has(\"idRol\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Consulta los empleados con exito"
+							},
+							"response": []
+						}
+					],
+					"description": "Consulta los empleados"
+				},
+				{
+					"name": "employee-data-save",
+					"item": [
+						{
+							"name": "save employee success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"Felipe\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Guarda un empleado con exito"
+							},
+							"response": []
+						},
+						{
+							"name": "save withoud firstname",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											"tests[\"details is equal to\"] = data.details == '{no debe estar vacío=[firstname]}';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"firstname\""
+							},
+							"response": []
+						},
+						{
+							"name": "save withoud lastname",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											"tests[\"details is equal to\"] = data.details == '{no debe estar vacío=[lastanme]}';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"felipe\",\n    \"lastanme\": \"\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"firstname\""
+							},
+							"response": []
+						},
+						{
+							"name": "save withoit enrolled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"\",\n    \"firstname\": \"Felipe\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"enrolled\""
+							},
+							"response": []
+						},
+						{
+							"name": "save employee exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 409\", function () {",
+											"    pm.response.to.have.status(409);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 409\"] = data.code == '409';",
+											"tests[\"type is equal ERROR\"] = data.type == 'ERROR';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"momef902\",\n    \"firstname\": \"Felipe\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Intenta guardar un empleado existente"
+							},
+							"response": []
+						}
+					],
+					"description": "Guarda un empleado"
+				},
+				{
+					"name": "employee-data-update",
+					"item": [
+						{
+							"name": "update success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"momef9097\",\n    \"firstname\": \"Juana\",\n    \"lastanme\": \"lopez\",\n    \"idRol\": 1,\n    \"idType\": 2,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}/3",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									],
+									"path": [
+										"3"
+									]
+								},
+								"description": "Actualiza un empleado con exito"
+							},
+							"response": []
+						},
+						{
+							"name": "not exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"code is equal 404\"] = data.code == '404';",
+											"tests[\"type is equal ERROR\"] = data.type == 'ERROR';",
+											"tests[\"details is equal to\"] = data.details == 'Dato no Encontrado.';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"200430002\",\n    \"firstname\": \"Juan\",\n    \"lastanme\": \"Perez\",\n    \"idRol\": 1,\n    \"idType\": 2,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}/0",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									],
+									"path": [
+										"0"
+									]
+								},
+								"description": "Intenta actualizar un empleado que no existe"
+							},
+							"response": []
+						}
+					],
+					"description": "API para actualizar los datos del empleado"
+				}
+			],
+			"description": "APIS para la administración de empleados"
+		},
+		{
+			"name": "SERV-payroll-management",
+			"item": [
+				{
+					"name": "payroll-employee-retrieve",
+					"item": [
+						{
+							"name": "pagination success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test('Employee schema is valid', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).to.be.a(\"number\");",
+											"    pm.expect(jsonData.totalPages).to.be.a(\"number\");",
+											"    pm.expect(jsonData.lastPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.firstPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.employees).to.be.an(\"array\");",
+											"    pm.expect(jsonData.employees).not.be.empty;",
+											"",
+											"    const employee = jsonData.employees[0]",
+											"    pm.expect(employee.idEmployee).to.be.a(\"number\");",
+											"    pm.expect(employee.enrolled).to.be.a(\"string\");",
+											"    pm.expect(employee.firstname).to.be.a(\"string\");",
+											"    pm.expect(employee.lastanme).to.be.a(\"string\");",
+											"    pm.expect(employee.idRol).to.be.a(\"number\");",
+											"    pm.expect(employee.idType).to.be.a(\"number\");",
+											"    pm.expect(employee.idStatus).to.be.a(\"number\");",
+											"});",
+											"",
+											"pm.test('Employee response not empty dataº', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).to.eql(1);;",
+											"    pm.expect(jsonData.totalPages).not.eql(0);",
+											"    pm.expect(jsonData.lastPage).to.be.false;",
+											"    pm.expect(jsonData.firstPage).to.be.true;",
+											"    pm.expect(jsonData.employees).not.be.empty;",
+											"",
+											"    const employee = jsonData.employees[0]",
+											"    pm.expect(employee.idEmployee).not.eql(0);",
+											"    pm.expect(employee.enrolled).not.be.empty;",
+											"    pm.expect(employee.firstname).not.be.empty;",
+											"    pm.expect(employee.lastanme).not.be.empty;",
+											"    pm.expect(employee.idRol).not.eql(0);",
+											"    pm.expect(employee.idType).not.eql(0);",
+											"    pm.expect(employee.idStatus).not.eql(0);",
+											"});",
+											"",
+											"tests[\"Body has idEmployee\"] = responseBody.has(\"idEmployee\");",
+											"tests[\"Body has enrolled\"] = responseBody.has(\"enrolled\");",
+											"tests[\"Body has firstname\"] = responseBody.has(\"firstname\");",
+											"tests[\"Body has lastanme\"] = responseBody.has(\"lastanme\");",
+											"tests[\"Body has idType\"] = responseBody.has(\"idType\");",
+											"tests[\"Body has idRol\"] = responseBody.has(\"idRol\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data-pagination}}1",
+									"host": [
+										"{{host-payroll}}{{employee-data-pagination}}1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "no data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test('Employee schema is valid', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).to.be.a(\"number\");",
+											"    pm.expect(jsonData.totalPages).to.be.a(\"number\");",
+											"    pm.expect(jsonData.lastPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.firstPage).to.be.a(\"boolean\");",
+											"    pm.expect(jsonData.employees).to.be.an(\"array\");",
+											"    pm.expect(jsonData.employees).to.be.empty;",
+											"});",
+											"",
+											"",
+											"pm.test('Employee response not empty dataº', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData.pageNumber).not.eql(0);;",
+											"    pm.expect(jsonData.totalPages).not.eql(0);",
+											"    pm.expect(jsonData.lastPage).to.be.true;",
+											"    pm.expect(jsonData.firstPage).to.be.false;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data-pagination}}100",
+									"host": [
+										"{{host-payroll}}{{employee-data-pagination}}100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.ok;",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"pm.test('Employee schema is valid', function() {",
+											"    const jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\");",
+											"",
+											"    const employee = jsonData[0];",
+											"    pm.expect(employee.idEmployee).to.be.a(\"number\");",
+											"    pm.expect(employee.enrolled).to.be.a(\"string\");",
+											"    pm.expect(employee.firstname).to.be.a(\"string\");",
+											"    pm.expect(employee.lastanme).to.be.a(\"string\");",
+											"    pm.expect(employee.idRol).to.be.a(\"number\");",
+											"    pm.expect(employee.idType).to.be.a(\"number\");",
+											"    pm.expect(employee.idStatus).to.be.a(\"number\");",
+											"});",
+											"",
+											"tests[\"Body has idEmployee\"] = responseBody.has(\"idEmployee\");",
+											"tests[\"Body has enrolled\"] = responseBody.has(\"enrolled\");",
+											"tests[\"Body has firstname\"] = responseBody.has(\"firstname\");",
+											"tests[\"Body has lastanme\"] = responseBody.has(\"lastanme\");",
+											"tests[\"Body has idType\"] = responseBody.has(\"idType\");",
+											"tests[\"Body has idRol\"] = responseBody.has(\"idRol\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									]
+								},
+								"description": "Consulta los empleados de rinku con exito"
+							},
+							"response": []
+						}
+					],
+					"description": "Casos de prueba para la api de employee-data-retrieve y employee-data-pagination"
+				},
+				{
+					"name": "payroll-employee-data-save",
+					"item": [
+						{
+							"name": "save employee success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"juana\",\n    \"lastanme\": \"de arco\",\n    \"idRol\": 2,\n    \"idType\": 2,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									]
+								},
+								"description": "Guarda un empleado con exito"
+							},
+							"response": []
+						},
+						{
+							"name": "save withoud firstname",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											"tests[\"details is equal to\"] = data.details == '{no debe estar vacío=[firstname]}';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"firstname\""
+							},
+							"response": []
+						},
+						{
+							"name": "save withoud lastname",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											"tests[\"details is equal to\"] = data.details == '{no debe estar vacío=[lastanme]}';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"felipe\",\n    \"lastanme\": \"\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"firstname\""
+							},
+							"response": []
+						},
+						{
+							"name": "save withoit enrolled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"\",\n    \"firstname\": \"Felipe\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-employee-management}}{{employee-data-domain}}",
+									"host": [
+										"{{host-employee-management}}{{employee-data-domain}}"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"enrolled\""
+							},
+							"response": []
+						}
+					],
+					"description": "Casos de prueba para la api de employee-data-save"
+				},
+				{
+					"name": "payroll-employee-data-update",
+					"item": [
+						{
+							"name": "update success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"momef9097\",\n    \"firstname\": \"Juana\",\n    \"lastanme\": \"lopez\",\n    \"idRol\": 1,\n    \"idType\": 2,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}/3",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									],
+									"path": [
+										"3"
+									]
+								},
+								"description": "Actualiza un empleado con exito"
+							},
+							"response": []
+						},
+						{
+							"name": "update withoud firstname",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											"tests[\"details is equal to\"] = data.details == '{no debe estar vacío=[firstname]}';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"\",\n    \"lastanme\": \"monzon\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}/3",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									],
+									"path": [
+										"3"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"firstname\""
+							},
+							"response": []
+						},
+						{
+							"name": "update without enrolled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"\",\n    \"firstname\": \"Juana\",\n    \"lastanme\": \"lopez\",\n    \"idRol\": 1,\n    \"idType\": 2,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}/3",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									],
+									"path": [
+										"3"
+									]
+								},
+								"description": "Actualiza un empleado con exito"
+							},
+							"response": []
+						},
+						{
+							"name": "update withoud lastname",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"tests[\"code is equal 400\"] = data.code == '400';",
+											"tests[\"type is equal INVALID\"] = data.type == 'INVALID';",
+											"tests[\"details is equal to\"] = data.details == '{no debe estar vacío=[lastanme]}';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"{{$randomUserName}}\",\n    \"firstname\": \"felipe\",\n    \"lastanme\": \"\",\n    \"idRol\": 1,\n    \"idType\": 1,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}/3",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									],
+									"path": [
+										"3"
+									]
+								},
+								"description": "Ocurre un badRequest al guardar un empleado falta campo \"firstname\""
+							},
+							"response": []
+						},
+						{
+							"name": "not exists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"Validate Response\", function () {",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Header required is present\", function () {",
+											"    pm.response.to.have.header(\"Content-Type\");",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+											"});",
+											"",
+											"tests[\"Body has type\"] = responseBody.has(\"type\");",
+											"tests[\"Body has code\"] = responseBody.has(\"code\");",
+											"tests[\"Body has details\"] = responseBody.has(\"details\");",
+											"tests[\"Body has location\"] = responseBody.has(\"location\");",
+											"tests[\"Body has uuid\"] = responseBody.has(\"uuid\");",
+											"tests[\"Body has timestamp\"] = responseBody.has(\"timestamp\");",
+											"",
+											"var data = JSON.parse(responseBody);",
+											"",
+											"tests[\"code is equal 404\"] = data.code == '404';",
+											"tests[\"type is equal ERROR\"] = data.type == 'ERROR';",
+											"tests[\"details is equal to\"] = data.details == 'Dato no Encontrado.';",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "uuid",
+										"value": "{{$randomUUID}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"enrolled\": \"200430002\",\n    \"firstname\": \"Juan\",\n    \"lastanme\": \"Perez\",\n    \"idRol\": 1,\n    \"idType\": 2,\n    \"idStatus\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-payroll}}{{employee-data}}/0",
+									"host": [
+										"{{host-payroll}}{{employee-data}}"
+									],
+									"path": [
+										"0"
+									]
+								},
+								"description": "Intenta actualizar un empleado que no existe"
+							},
+							"response": []
+						}
+					],
+					"description": "Casos de prueba para la api de employe--data-update"
+				}
+			],
+			"description": "Gestión y administración de Empleados de RINKU Cinmea."
+		}
+	]
+}
